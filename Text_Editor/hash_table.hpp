@@ -7,18 +7,17 @@
 class HashTable {
 public:
     HashTable();
-    ~HashTable() {};
+    ~HashTable();
 
-    void add(std::string word);
+    void add(const std::string& word, unsigned number_of = 1);
 
 private:
     size_t num_of_added_f_;
     size_t num_of_added_s_;
-    double fill_factor_f_;
-    double fill_factor_s_;
-    std::vector<std::pair<int, std::string>> hash_table_f_;
-    std::vector<std::pair<int, std::string>> hash_table_s_;
-    unsigned long long get_hash(std::string word, int type);
+    size_t capacity_;
+    std::pair<unsigned, std::string>* hash_table_f_;
+    std::pair<unsigned, std::string>* hash_table_s_;
+    uint64_t get_hash(std::string word, int type, uint64_t mod);
     void hsh_resize();
 };
 
