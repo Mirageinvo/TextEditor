@@ -1,10 +1,10 @@
 #include <cmath>
 #include "hash_table.hpp"
 
-HashTable::HashTable() : num_of_added_f_(0), num_of_added_s_(0), capacity_(500000) {
-    hash_table_f_ = new std::pair<unsigned, std::string>[500000];
-    hash_table_s_ = new std::pair<unsigned, std::string>[500000];
-    for (size_t i = 0; i < 500000; ++i) {
+HashTable::HashTable(size_t capacity) : num_of_added_f_(0), num_of_added_s_(0), capacity_(capacity),
+                                        hash_table_f_(new std::pair<unsigned, std::string>[capacity]),
+                                        hash_table_s_(new std::pair<unsigned, std::string>[capacity]) {
+    for (size_t i = 0; i < capacity_; ++i) {
         hash_table_f_[i] = std::make_pair(0, "");
         hash_table_f_[i] = std::make_pair(0, "");
     }
@@ -15,34 +15,24 @@ HashTable::~HashTable() {
     delete[] hash_table_s_;
 }
 
-uint64_t HashTable::get_hash_(std::string word, int type, uint64_t mod) {
-    uint64_t hash = static_cast<int>(word[0]) >= static_cast<int>('a') ? static_cast<uint64_t>(word[0]) - static_cast<uint64_t>('a') :
-                                                                                   static_cast<uint64_t>(word[0]) - static_cast<uint64_t>('A');
+uint64_t HashTable::get_hash_(std::string word, int type, uint64_t mod) const {
+    uint64_t hash = static_cast<int>(word[0]);
     uint64_t mult = (type == 1 ? 1697 : 3833);
     uint64_t p = mult;
-    int word_type;
-    if (static_cast<int>(word[0]) >= static_cast<int>('A') && static_cast<int>(word[0]) <= static_cast<int>('Z') && 
-             static_cast<int>(word[word.size() - 1]) >= static_cast<int>('A') && static_cast<int>(word[word.size() - 1]) <= static_cast<int>('Z')) {
-        word_type = 1;
+    for (size_t i = 1; i < word.size(); ++i) {
+        hash = (hash + (static_cast<uint64_t>(word[i]) * p)) % mod;
+        p = (p * mult) % mod;
     }
-    else {
-        word_type = 0;
-    }
-
-    if (word_type == 0) {
-        for (size_t i = 1; i < word.size(); ++i) {
-            hash = (hash + ((static_cast<uint64_t>(word[i]) - static_cast<uint64_t>('a')) * p)) % mod;
-            p = (p * mult) % mod;
-        }
-    }
-    else if (word_type == 1) {
-        for (size_t i = 1; i < word.size(); ++i) {
-            hash = (hash + ((static_cast<uint64_t>(word[i]) - static_cast<uint64_t>('A')) * p)) % mod;
-            p = (p * mult) % mod;
-        }
-    }
-
     return hash;
+}
+
+bool HashTable::in_table(const std::string& word) const {
+    uint64_t hsh1 = get_hash_(word, 1, capacity_);
+    uint64_t hsh2 = get_hash_(word, 2, capacity_);
+    if (hash_table_f_[hsh1].second == word || hash_table_s_[hsh2].second == word) {
+        return true;
+    }
+    return false;
 }
 
 void HashTable::hsh_resize_() {

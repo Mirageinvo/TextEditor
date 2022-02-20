@@ -1,11 +1,11 @@
 #ifndef TEXT_EDITOR_DICTIONARY
 #define TEXT_EDITOR_DICTIONARY
 
-#include "hash_table.hpp"
+#include "../hash_table/hash_table.hpp"
 
 class Dictionary : public HashTable {
 public:
-    Dictionary(size_t word_size);
+    explicit Dictionary(size_t word_size);
     void add_words(const std::string& path);
 private:
     size_t word_size_;

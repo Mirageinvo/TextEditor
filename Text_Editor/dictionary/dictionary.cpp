@@ -7,8 +7,8 @@ void Dictionary::make_word_(const std::string& tmp, std::string& word) {
     bool is_digit = true;
     bool only_signs = true;
     size_t it1, it2;
-    for (size_t i = 0; i < tmp.size(); ++i) {
-        if (static_cast<int>(tmp[i]) < static_cast<int>('0') || static_cast<int>(tmp[i]) > static_cast<int>('9')) {
+    for (const char& c : tmp) {
+        if (static_cast<int>(c) < static_cast<int>('0') || static_cast<int>(c) > static_cast<int>('9')) {
             is_digit = false;
             break;
         }
@@ -48,10 +48,10 @@ void Dictionary::add_words(const std::string& path) {
         while (file.eof()) {
             file >> tmp;
             make_word_(tmp, word);
-            if (word.size() == word_size_) {
+            if ((word.size() >= 10 && word_size_ == 0) || ((word.size() == 1 || word.size() == 2) && word_size_ == 1) || (word.size() > 2 && word.size() < 10 && word.size() == word_size_)) {
                 add(word);
             }
         }
+        file.close();
     }
-    file.close();
 }
