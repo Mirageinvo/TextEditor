@@ -12,9 +12,9 @@ public:
     bool in_table(const std::string& word) const;
 
 private:
+    size_t capacity_;
     size_t num_of_added_f_;
     size_t num_of_added_s_;
-    size_t capacity_;
     std::pair<unsigned, std::string>* hash_table_f_;
     std::pair<unsigned, std::string>* hash_table_s_;
     uint64_t get_hash_(std::string word, int type, uint64_t mod) const;

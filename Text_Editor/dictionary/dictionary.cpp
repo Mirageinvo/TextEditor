@@ -1,4 +1,5 @@
 #include <fstream>
+#include <cassert>
 #include "dictionary.hpp"
 
 Dictionary::Dictionary(size_t word_size) : word_size_(word_size) {};
@@ -41,11 +42,16 @@ void Dictionary::make_word_(const std::string& tmp, std::string& word) {
     }
 }
 
+void Dictionary::set_word_size(const size_t word_size) {
+    word_size_ = word_size;
+}
+
 void Dictionary::add_words(const std::string& path) {
     std::string tmp, word;
     std::ifstream file(path);
+    assert(file.is_open());
     if (file.is_open()) {
-        while (file.eof()) {
+        while (!file.eof()) {
             file >> tmp;
             make_word_(tmp, word);
             if ((word.size() >= 10 && word_size_ == 0) || ((word.size() == 1 || word.size() == 2) && word_size_ == 1) || (word.size() > 2 && word.size() < 10 && word.size() == word_size_)) {

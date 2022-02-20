@@ -1,7 +1,7 @@
 #include <cmath>
 #include "hash_table.hpp"
 
-HashTable::HashTable(size_t capacity) : num_of_added_f_(0), num_of_added_s_(0), capacity_(capacity),
+HashTable::HashTable(size_t capacity) : capacity_(capacity), num_of_added_f_(0), num_of_added_s_(0),
                                         hash_table_f_(new std::pair<unsigned, std::string>[capacity]),
                                         hash_table_s_(new std::pair<unsigned, std::string>[capacity]) {
     for (size_t i = 0; i < capacity_; ++i) {
@@ -93,7 +93,9 @@ void HashTable::add(const std::string& word, unsigned number_of) {
             }
             table = 3 - table;
             count++;
-            if (count > static_cast<unsigned>(log(capacity_) / log(1.5))) { break; }
+            if (count > static_cast<unsigned>(log(capacity_) / log(1.5))) {
+                break;
+            }
         }
     }
     else {
@@ -117,6 +119,6 @@ void HashTable::add(const std::string& word, unsigned number_of) {
 
     if (static_cast<double>(num_of_added_f_) / static_cast<double>(capacity_) > 0.4 ||
         static_cast<double>(num_of_added_s_) / static_cast<double>(capacity_) > 0.4) {
-            hsh_resize_();
+        hsh_resize_();
     }
 }
