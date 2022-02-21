@@ -1,2 +1,5 @@
 build
+out
+.vs
 .vscode
+main.cpp
