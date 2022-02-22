@@ -4,6 +4,8 @@ set(CMAKE_CXX_STANDART 20)
 
 set(PATH Text_Editor/sources)
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
+
 add_executable(main main.cpp ${PATH}/dictionary.cpp ${PATH}/hash_table.cpp ${PATH}/text_editor.cpp)
 target_include_directories(main PUBLIC Text_Editor/includes/)
 
