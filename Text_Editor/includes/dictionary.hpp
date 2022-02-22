@@ -10,7 +10,7 @@ public:
     void set_word_size(const size_t word_size);
 private:
     size_t word_size_;
-    void make_word_(const std::string& tmp, std::string& word);
+    std::string make_word_(const std::string& tmp);
 };
 
 

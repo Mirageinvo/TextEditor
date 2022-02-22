@@ -4,8 +4,9 @@
 
 Dictionary::Dictionary(size_t word_size) : word_size_(word_size) {};
 
-void Dictionary::make_word_(const std::string& tmp, std::string& word) {
+std::string Dictionary::make_word_(const std::string& tmp) {
     bool only_signs = true;
+    std::string word = "";
     size_t it1 = 0, it2 = 0;
     for (size_t i = 0; i < tmp.size(); ++i) {
         if (static_cast<int>(tmp[i]) >= static_cast<int>('a') && static_cast<int>(tmp[i]) <= static_cast<int>('z') ||
@@ -17,7 +18,7 @@ void Dictionary::make_word_(const std::string& tmp, std::string& word) {
     }
     if (only_signs) {
         word = "";
-        return;
+        return word;
     }
     for (int i = static_cast<int>(tmp.size()) - 1; i >= 0; --i) {
         if (static_cast<int>(tmp[i]) >= static_cast<int>('a') && static_cast<int>(tmp[i]) <= static_cast<int>('z') ||
@@ -27,8 +28,13 @@ void Dictionary::make_word_(const std::string& tmp, std::string& word) {
         }
     }
     for (size_t i = it1; i <= it2; ++i) {
+        if ((static_cast<int>(tmp[i]) < static_cast<int>('a') || static_cast<int>(tmp[i]) > static_cast<int>('z')) &&
+            (static_cast<int>(tmp[i]) < static_cast<int>('A') || static_cast<int>(tmp[i]) > static_cast<int>('Z'))) {
+            return "";
+        }
         word += tmp[i];
     }
+    return word.size() > 1u ? word : "";
 }
 
 void Dictionary::set_word_size(const size_t word_size) {
@@ -43,8 +49,8 @@ void Dictionary::add_words(const std::string& path) {
     if (in.is_open()) {
         while (!in.eof()) {
             in >> tmp;
-            make_word_(tmp, word);
-            if ((word.size() >= 10 && word_size_ == 0) || ((word.size() == 1 || word.size() == 2) && word_size_ == 1) || (word.size() > 2 && word.size() < 10 && word.size() == word_size_)) {
+            word = make_word_(tmp);
+            if ((word.size() >= 10 && word_size_ == 0) || (word.size() == 2 && word_size_ == 1) || (word.size() > 2 && word.size() < 10 && word.size() == word_size_)) {
                 add(word);
             }
         }
