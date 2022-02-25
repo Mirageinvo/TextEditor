@@ -6,7 +6,20 @@ set(PATH Text_Editor/sources)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 
-add_executable(main main.cpp ${PATH}/dictionary.cpp ${PATH}/hash_table.cpp ${PATH}/text_editor.cpp)
+file(GLOB_RECURSE SOURCE_FILES ./Text_Editor/*.cpp)
+file(GLOB_RECURSE DICT_FILES *.cpp *.hpp)
+add_custom_target(
+    clang_format
+    COMMAND clang-format -i ${DICT_FILES}
+)
+
+set(CMAKE_CXX_CLANG_TIDY
+    clang-tidy;
+    --format-style=file;
+    --header-filter=*.hpp;
+)
+
+add_executable(main ${SOURCE_FILES})
 target_include_directories(main PUBLIC Text_Editor/includes/)
 
 add_custom_target(
