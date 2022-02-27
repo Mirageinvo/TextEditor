@@ -9,6 +9,8 @@ class TextEditor
     TextEditor();
     ~TextEditor();
     void teach(const std::string &path);
+    void fix_mist(const std::string& path);
+    bool has_word(const std::string& word) const;
 
   private:
     Dictionary *tables;
