@@ -34,19 +34,6 @@ void TextEditor::teach(const std::string &path)
     delete[] arr;
 }
 
-bool TextEditor::has_word(const std::string &word) const
-{
-    if (word.size() <= 1)
-    {
-        return false;
-    }
-    if (word.size() >= 10)
-    {
-        return tables_[8].in_table(word);
-    }
-    return tables_[word.size() - 2].in_table(word);
-}
-
 std::string TextEditor::cut_word(const std::string &tmp, size_t &it1, size_t &it2)
 {
     bool only_signs = true;
@@ -106,10 +93,13 @@ void TextEditor::fix_mist(const std::string &path)
             tmp = "";
             was_space = true;
             frst_word = true;
-            for (const char &i : line)
+            for (size_t i = 0; i < line.size(); ++i)
             {
-                if (i == ' ')
+                if (line[i] == ' ' || i == line.size() - 1)
                 {
+                    if (i == line.size() - 1) {
+                        tmp += line[i];
+                    }
                     if (!frst_word)
                     {
                         out << " ";
@@ -118,27 +108,34 @@ void TextEditor::fix_mist(const std::string &path)
                     if (!was_space)
                     {
                         word = cut_word(tmp, it1, it2);
-                        frst_word = false;
-
-                        out << tmp;
-                        /*if (word == "") {
+                        if (word == "" || word.size() == 1) {
                             out << tmp;
                         }
                         else {
+                            if ((word.size() > 1 && word.size() < 10 && tables_[word.size() - 2].in_table(word)) || (word.size() >= 10 && tables_[8].in_table(word))) {
+                                out << tmp;
+                            }
+                            else {
+                                //find the best word with Levenstein and replace
+                                //std::cout << word << std::endl;//////////////
 
-                        }*/
+                                out << "#####";
+                            }
+                        }
+
 
                         tmp = "";
                         was_space = true;
+                        frst_word = false;
                     }
                 }
                 else
                 {
                     was_space = false;
-                    tmp += i;
+                    tmp += line[i];
                 }
             }
-            out << " " << tmp << std::endl;
+            out << std::endl;
         }
     }
     in.close();
