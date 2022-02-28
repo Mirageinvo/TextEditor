@@ -30,5 +30,5 @@ add_dependencies(run_main main)
 
 if (ADD_SANITIZERS)
     target_compile_options(main PUBLIC -fsanitize=address -g)
-    set_target_properties(main  PROPERTIES LINK_FLAGS "-fsanitize=address")
+    set_target_properties(main PROPERTIES LINK_FLAGS "-fsanitize=address")
 endif()
