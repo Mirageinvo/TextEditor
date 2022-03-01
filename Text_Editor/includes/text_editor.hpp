@@ -10,7 +10,7 @@ class TextEditor
     ~TextEditor();
     void teach(const std::string &path);
     void fix_mist(const std::string &path);
-    size_t find_min_dist(const std::string& word);
+    std::string find_best_word(const std::string& word) const;
 
   private:
     Dictionary *tables_;

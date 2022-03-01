@@ -47,11 +47,15 @@ size_t TextEditor::dist_lev(const std::string& word1, const std::string& word2) 
                 dp[i][0] = i;
             }
             else {
-                dp[i][j] = std::min(dp[i][j - 1] + 1, dp[i - 1][j] + 1, dp[i - 1][j - 1] + (word1[i] == word2[j] ? 0 : 1));
+                dp[i][j] = std::min(dp[i][j - 1] + 1, std::min(dp[i - 1][j] + 1, dp[i - 1][j - 1] + (word1[i] == word2[j] ? 0 : 1)));
             }
         }
     }
     return dp[word1.size() - 1][word2.size() - 1];
+}
+
+std::string TextEditor::find_best_word(const std::string& word) const {
+
 }
 
 std::string TextEditor::cut_word_(const std::string &tmp, size_t &it1, size_t &it2)
