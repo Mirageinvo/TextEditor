@@ -35,12 +35,6 @@ std::string Dictionary::make_word_(const std::string &tmp)
     }
     for (size_t i = it1; i <= it2; ++i)
     {
-        if (tmp[i] != '\'' && tmp[i] != '-' &&
-            (static_cast<int>(tmp[i]) < static_cast<int>('a') || static_cast<int>(tmp[i]) > static_cast<int>('z')) &&
-            (static_cast<int>(tmp[i]) < static_cast<int>('A') || static_cast<int>(tmp[i]) > static_cast<int>('Z')))
-        {
-            return "";
-        }
         word += tmp[i];
     }
     return word.size() > 1u ? word : "";
@@ -49,6 +43,28 @@ std::string Dictionary::make_word_(const std::string &tmp)
 void Dictionary::set_word_size(const size_t word_size)
 {
     word_size_ = word_size;
+}
+
+size_t Dictionary::dist_lev(const std::string &word1, const std::string &word2) const
+{
+    std::vector<std::vector<size_t>> dp(word1.size() + 1, std::vector<size_t>(word2.size() + 1));
+    for (size_t i = 0; i <= word1.size(); ++i)
+    {
+        dp[i][0] = i;
+    }
+    for (size_t i = 0; i <= word2.size(); ++i)
+    {
+        dp[0][i] = i;
+    }
+    for (size_t i = 1; i <= word1.size(); ++i)
+    {
+        for (size_t j = 1; j <= word2.size(); ++j)
+        {
+            dp[i][j] = std::min(dp[i][j - 1] + 1,
+                                std::min(dp[i - 1][j] + 1, dp[i - 1][j - 1] + (word1[i - 1] == word2[j - 1] ? 0 : 1)));
+        }
+    }
+    return dp[word1.size()][word2.size()];
 }
 
 void Dictionary::add_words(const std::string &path)
@@ -70,5 +86,33 @@ void Dictionary::add_words(const std::string &path)
             }
         }
         in.close();
+    }
+}
+
+void Dictionary::get_best_word(std::string &ret, size_t &dist, size_t &freq, const std::string &word)
+{
+    size_t tmp;
+    for (size_t i = 0; i < capacity_; ++i)
+    {
+        if (hash_table_f_[i].first != 0)
+        {
+            tmp = dist_lev(word, hash_table_f_[i].second);
+            if (tmp < dist || (tmp == dist && hash_table_f_[i].first > freq))
+            {
+                ret = hash_table_f_[i].second;
+                dist = tmp;
+                freq = hash_table_f_[i].first;
+            }
+        }
+        if (hash_table_s_[i].first != 0)
+        {
+            tmp = dist_lev(word, hash_table_s_[i].second);
+            if (tmp < dist || (tmp == dist && hash_table_s_[i].first > freq))
+            {
+                ret = hash_table_s_[i].second;
+                dist = tmp;
+                freq = hash_table_s_[i].first;
+            }
+        }
     }
 }

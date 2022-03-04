@@ -2,10 +2,7 @@
 
 #include <cassert>
 #include <fstream>
-#include <iostream>
 #include <thread>
-#include <vector>
-#include <cmath>
 
 TextEditor::TextEditor() : tables_(new Dictionary[9])
 {
@@ -36,26 +33,58 @@ void TextEditor::teach(const std::string &path)
     delete[] arr;
 }
 
-size_t TextEditor::dist_lev(const std::string& word1, const std::string& word2) const {
-    std::vector<std::vector<size_t>> dp(word1.size(), std::vector<size_t>(word2.size()));
-    for (size_t i = 0; i < word1.size(); ++i) {
-        for (size_t j = 0; j < word2.size(); ++j) {
-            if (i == 0) {
-                dp[0][j] = j;
-            }
-            else if (j == 0) {
-                dp[i][0] = i;
-            }
-            else {
-                dp[i][j] = std::min(dp[i][j - 1] + 1, std::min(dp[i - 1][j] + 1, dp[i - 1][j - 1] + (word1[i] == word2[j] ? 0 : 1)));
-            }
+std::string TextEditor::find_best_word(const std::string &word) const
+{
+    size_t dist = 1e9, freq = 0;
+    size_t tmp;
+    std::string ret;
+    if (word.size() == 2)
+    {
+        for (size_t j = 0; j < 3; ++j)
+        {
+            tables_[j].get_best_word(ret, dist, freq, word);
         }
     }
-    return dp[word1.size() - 1][word2.size() - 1];
-}
-
-std::string TextEditor::find_best_word(const std::string& word) const {
-
+    else if (word.size() == 3)
+    {
+        for (size_t j = 0; j < 4; ++j)
+        {
+            tables_[j].get_best_word(ret, dist, freq, word);
+        }
+    }
+    else if (word.size() == 9)
+    {
+        for (size_t j = 0; j < 4; ++j)
+        {
+            tables_[j + 5].get_best_word(ret, dist, freq, word);
+        }
+    }
+    else if (word.size() == 10)
+    {
+        for (size_t j = 0; j < 3; ++j)
+        {
+            tables_[j + 6].get_best_word(ret, dist, freq, word);
+        }
+    }
+    else if (word.size() == 11)
+    {
+        for (size_t j = 0; j < 2; ++j)
+        {
+            tables_[j + 7].get_best_word(ret, dist, freq, word);
+        }
+    }
+    else if (word.size() >= 12)
+    {
+        tables_[8].get_best_word(ret, dist, freq, word);
+    }
+    else
+    {
+        for (size_t j = 0; j < 5; ++j)
+        {
+            tables_[j + word.size() - 4].get_best_word(ret, dist, freq, word);
+        }
+    }
+    return ret;
 }
 
 std::string TextEditor::cut_word_(const std::string &tmp, size_t &it1, size_t &it2)
@@ -87,12 +116,6 @@ std::string TextEditor::cut_word_(const std::string &tmp, size_t &it1, size_t &i
     }
     for (size_t i = it1; i <= it2; ++i)
     {
-        if (tmp[i] != '\'' && tmp[i] != '-' &&
-            (static_cast<int>(tmp[i]) < static_cast<int>('a') || static_cast<int>(tmp[i]) > static_cast<int>('z')) &&
-            (static_cast<int>(tmp[i]) < static_cast<int>('A') || static_cast<int>(tmp[i]) > static_cast<int>('Z')))
-        {
-            return "";
-        }
         word += tmp[i];
     }
     return word.size() > 1u ? word : "";
@@ -121,7 +144,8 @@ void TextEditor::fix_mist(const std::string &path)
             {
                 if (line[i] == ' ' || i == line.size() - 1)
                 {
-                    if (i == line.size() - 1) {
+                    if (i == line.size() - 1)
+                    {
                         tmp += line[i];
                     }
                     if (!frst_word)
@@ -132,18 +156,28 @@ void TextEditor::fix_mist(const std::string &path)
                     if (!was_space)
                     {
                         word = cut_word_(tmp, it1, it2);
-                        if (word == "" || word.size() == 1) {
+                        if (word == "" || word.size() == 1)
+                        {
                             out << tmp;
                         }
-                        else {
-                            if ((word.size() > 1 && word.size() < 10 && tables_[word.size() - 2].in_table(word)) || (word.size() >= 10 && tables_[8].in_table(word))) {
+                        else
+                        {
+                            if ((word.size() > 1 && word.size() < 10 && tables_[word.size() - 2].in_table(word)) ||
+                                (word.size() >= 10 && tables_[8].in_table(word)))
+                            {
                                 out << tmp;
                             }
-                            else {
-                                //find the best word with Levenstein and replace
-                                //std::cout << word << std::endl;//////////////
-
-                                out << "#####";
+                            else
+                            {
+                                for (size_t p = 0; p < it1; ++p)
+                                {
+                                    out << tmp[p];
+                                }
+                                out << find_best_word(word);
+                                for (size_t p = it2 + 1; p < tmp.size(); ++p)
+                                {
+                                    out << tmp[p];
+                                }
                             }
                         }
                         tmp = "";
