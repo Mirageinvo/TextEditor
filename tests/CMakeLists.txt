@@ -1,5 +1,5 @@
 set(INCL_PATH "../Text_Editor/includes/")
-set(SRCS_PATH "../Text_Editor/sources")
+set(SRCS_PATH "../Text_Editor/sources/")
 set(SRCS ${SRCS_PATH}/hash_table.cpp ${SRCS_PATH}/dictionary.cpp ${SRCS_PATH}/text_editor.cpp)
 
 include(FetchContent)
@@ -10,7 +10,7 @@ FetchContent_MakeAvailable(googletest)
 
 enable_testing()
 
-add_executable(tests ${SRCS})
+add_executable(tests tests.cpp ${SRCS})
 target_link_libraries(tests gtest_main)
 target_include_directories(tests PUBLIC ${INCL_PATH})
 
@@ -23,3 +23,6 @@ add_custom_target(
     COMMAND ./tests
 )
 add_dependencies(run_tests tests)
+
+target_compile_options(tests PUBLIC -fsanitize=address -g)
+set_target_properties(tests PROPERTIES LINK_FLAGS "-fsanitize=address")
