@@ -3,9 +3,10 @@
 #include <cmath>
 
 HashTable::HashTable(size_t capacity)
-    : capacity_(capacity), num_of_added_f_(0), num_of_added_s_(0),
+    : capacity_(capacity),
       hash_table_f_(new std::pair<unsigned, std::string>[capacity]),
-      hash_table_s_(new std::pair<unsigned, std::string>[capacity])
+      hash_table_s_(new std::pair<unsigned, std::string>[capacity]),
+      num_of_added_f_(0), num_of_added_s_(0)
 {
     for (size_t i = 0; i < capacity_; ++i)
     {
@@ -22,7 +23,7 @@ HashTable::~HashTable()
 
 uint64_t HashTable::get_hash_(std::string word, int type, uint64_t mod) const
 {
-    uint64_t hash = static_cast<int>(word[0]);
+    auto hash = static_cast<uint64_t>(static_cast<unsigned char>(word[0]));
     uint64_t mult = (type == 1 ? 1697 : 3833);
     uint64_t p = mult;
     for (size_t i = 1; i < word.size(); ++i)
@@ -115,7 +116,7 @@ void HashTable::add(const std::string &word, unsigned number_of)
             }
             table = 3 - table;
             count++;
-            if (count > static_cast<unsigned>(log(capacity_) / log(1.5)))
+            if (count > static_cast<unsigned>(log(static_cast<double>(capacity_)) / log(1.5)))
             {
                 break;
             }
