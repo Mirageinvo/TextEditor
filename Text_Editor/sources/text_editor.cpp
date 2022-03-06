@@ -92,8 +92,10 @@ std::string TextEditor::cut_word_(const std::string &tmp, size_t &it1, size_t &i
     std::string word = "";
     for (size_t i = 0; i < tmp.size(); ++i)
     {
-        if ((static_cast<unsigned>(tmp[i]) >= static_cast<unsigned>('a') && static_cast<unsigned>(tmp[i]) <= static_cast<unsigned>('z')) ||
-            (static_cast<unsigned>(tmp[i]) >= static_cast<unsigned>('A') && static_cast<unsigned>(tmp[i]) <= static_cast<unsigned>('Z')))
+        if ((static_cast<unsigned>(tmp[i]) >= static_cast<unsigned>('a') &&
+             static_cast<unsigned>(tmp[i]) <= static_cast<unsigned>('z')) ||
+            (static_cast<unsigned>(tmp[i]) >= static_cast<unsigned>('A') &&
+             static_cast<unsigned>(tmp[i]) <= static_cast<unsigned>('Z')))
         {
             only_signs = false;
             it1 = i;
@@ -106,8 +108,10 @@ std::string TextEditor::cut_word_(const std::string &tmp, size_t &it1, size_t &i
     }
     for (int i = static_cast<int>(tmp.size()) - 1; i >= 0; --i)
     {
-        if ((static_cast<int>(tmp[static_cast<size_t>(i)]) >= static_cast<int>('a') && static_cast<int>(tmp[static_cast<size_t>(i)]) <= static_cast<int>('z')) ||
-            (static_cast<int>(tmp[static_cast<size_t>(i)]) >= static_cast<int>('A') && static_cast<int>(tmp[static_cast<size_t>(i)]) <= static_cast<int>('Z')))
+        if ((static_cast<int>(tmp[static_cast<size_t>(i)]) >= static_cast<int>('a') &&
+             static_cast<int>(tmp[static_cast<size_t>(i)]) <= static_cast<int>('z')) ||
+            (static_cast<int>(tmp[static_cast<size_t>(i)]) >= static_cast<int>('A') &&
+             static_cast<int>(tmp[static_cast<size_t>(i)]) <= static_cast<int>('Z')))
         {
             it2 = static_cast<size_t>(i);
             break;

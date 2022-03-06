@@ -3,7 +3,9 @@
 #include <cassert>
 #include <fstream>
 
-Dictionary::Dictionary(size_t word_size) : word_size_(word_size){}
+Dictionary::Dictionary(size_t word_size) : word_size_(word_size)
+{
+}
 
 std::string Dictionary::make_word_(const std::string &tmp)
 {
@@ -12,8 +14,10 @@ std::string Dictionary::make_word_(const std::string &tmp)
     size_t it1 = 0, it2 = 0;
     for (size_t i = 0; i < tmp.size(); ++i)
     {
-        if ((static_cast<size_t>(tmp[i]) >= static_cast<size_t>('a') && static_cast<size_t>(tmp[i]) <= static_cast<size_t>('z')) ||
-            (static_cast<size_t>(tmp[i]) >= static_cast<size_t>('A') && static_cast<size_t>(tmp[i]) <= static_cast<size_t>('Z')))
+        if ((static_cast<size_t>(tmp[i]) >= static_cast<size_t>('a') &&
+             static_cast<size_t>(tmp[i]) <= static_cast<size_t>('z')) ||
+            (static_cast<size_t>(tmp[i]) >= static_cast<size_t>('A') &&
+             static_cast<size_t>(tmp[i]) <= static_cast<size_t>('Z')))
         {
             only_signs = false;
             it1 = i;
@@ -26,8 +30,10 @@ std::string Dictionary::make_word_(const std::string &tmp)
     }
     for (int i = static_cast<int>(tmp.size()) - 1; i >= 0; --i)
     {
-        if ((static_cast<size_t>(tmp[static_cast<size_t>(i)]) >= static_cast<size_t>('a') && static_cast<size_t>(tmp[static_cast<size_t>(i)]) <= static_cast<size_t>('z')) ||
-            (static_cast<size_t>(tmp[static_cast<size_t>(i)]) >= static_cast<size_t>('A') && static_cast<size_t>(tmp[static_cast<size_t>(i)]) <= static_cast<size_t>('Z')))
+        if ((static_cast<size_t>(tmp[static_cast<size_t>(i)]) >= static_cast<size_t>('a') &&
+             static_cast<size_t>(tmp[static_cast<size_t>(i)]) <= static_cast<size_t>('z')) ||
+            (static_cast<size_t>(tmp[static_cast<size_t>(i)]) >= static_cast<size_t>('A') &&
+             static_cast<size_t>(tmp[static_cast<size_t>(i)]) <= static_cast<size_t>('Z')))
         {
             it2 = static_cast<size_t>(i);
             break;

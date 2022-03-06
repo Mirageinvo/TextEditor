@@ -3,10 +3,8 @@
 #include <cmath>
 
 HashTable::HashTable(size_t capacity)
-    : capacity_(capacity),
-      hash_table_f_(new std::pair<unsigned, std::string>[capacity]),
-      hash_table_s_(new std::pair<unsigned, std::string>[capacity]),
-      num_of_added_f_(0), num_of_added_s_(0)
+    : capacity_(capacity), hash_table_f_(new std::pair<unsigned, std::string>[capacity]),
+      hash_table_s_(new std::pair<unsigned, std::string>[capacity]), num_of_added_f_(0), num_of_added_s_(0)
 {
     for (size_t i = 0; i < capacity_; ++i)
     {
