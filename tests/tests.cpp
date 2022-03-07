@@ -121,6 +121,7 @@ TEST(TextEditor, EndToEndTestFirst) {
         in.close();
         in_ans.close();
     }
+    ASSERT_TRUE(remove("../../fixed_texts/test_texts/1.txt") == 0);
 }
 
 TEST(TextEditor, EndToEndTestSecond) {
@@ -149,6 +150,7 @@ TEST(TextEditor, EndToEndTestSecond) {
         in.close();
         in_ans.close();
     }
+    ASSERT_TRUE(remove("../../fixed_texts/test_texts/2.txt") == 0);
 }
 
 TEST(TextEditor, EndToEndTestThird) {
@@ -177,6 +179,7 @@ TEST(TextEditor, EndToEndTestThird) {
         in.close();
         in_ans.close();
     }
+    ASSERT_TRUE(remove("../../fixed_texts/test_texts/3.txt") == 0);
 }
 
 int main(int argc, char *argv[])
