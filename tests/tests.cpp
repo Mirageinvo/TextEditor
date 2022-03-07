@@ -1,6 +1,6 @@
-#include <fstream>
 #include "text_editor.hpp"
 #include "gtest/gtest.h"
+#include <fstream>
 
 const size_t kItsF = 1e3;
 const size_t kItsS = 1e2;
@@ -9,7 +9,8 @@ TEST(HashTable, InTableTest)
 {
     HashTable tmp;
     std::string s;
-    for (size_t i = 0; i < kItsF; ++i) {
+    for (size_t i = 0; i < kItsF; ++i)
+    {
         s += static_cast<char>(static_cast<unsigned>('a') + (i % 26));
         ASSERT_FALSE(tmp.in_table(s));
     }
@@ -19,7 +20,8 @@ TEST(HashTable, AddTest)
 {
     HashTable tmp;
     std::string s;
-    for (size_t i = 0; i < kItsF; ++i) {
+    for (size_t i = 0; i < kItsF; ++i)
+    {
         s += static_cast<char>(static_cast<unsigned>('a') + (i % 26));
         tmp.add(s);
         ASSERT_TRUE(tmp.in_table(s));
@@ -31,7 +33,8 @@ TEST(Dictionary, GetBestWordTest)
     Dictionary tmp;
     size_t dist, freq;
     std::string s, ret;
-    for (size_t i = 0; i < kItsS; ++i) {
+    for (size_t i = 0; i < kItsS; ++i)
+    {
         dist = 1e9;
         freq = 0;
         s += static_cast<char>(static_cast<unsigned>('a') + (i % 26));
@@ -54,13 +57,15 @@ TEST(Dictionary, AddWordsTest)
     ASSERT_TRUE(in.is_open());
     if (in.is_open())
     {
-        while (!in.eof()) {
+        while (!in.eof())
+        {
             in >> s;
             arr.push_back(s);
         }
         in.close();
     }
-    for (size_t i = 0; i < arr.size(); ++i) {
+    for (size_t i = 0; i < arr.size(); ++i)
+    {
         dist = 1e9;
         freq = 0;
         ASSERT_TRUE(tmp.in_table(s));
@@ -80,22 +85,26 @@ TEST(TextEditor, FindBestWordTest)
     ASSERT_TRUE(in.is_open());
     if (in.is_open())
     {
-        while (!in.eof()) {
+        while (!in.eof())
+        {
             in >> s;
             arr.push_back(s);
         }
         in.close();
     }
-    for (const auto& word : arr) {
+    for (const auto &word : arr)
+    {
         s = "";
-        for (size_t j = 0; j < word.size() - 2; ++j) {
+        for (size_t j = 0; j < word.size() - 2; ++j)
+        {
             s += word[j];
         }
         ASSERT_TRUE(word == tmp.find_best_word(s));
     }
 }
 
-TEST(TextEditor, EndToEndTestFirst) {
+TEST(TextEditor, EndToEndTestFirst)
+{
     TextEditor tmp;
     std::string sf, ss;
     tmp.teach("LoR.txt");
@@ -124,7 +133,8 @@ TEST(TextEditor, EndToEndTestFirst) {
     ASSERT_TRUE(remove("../../fixed_texts/test_texts/1.txt") == 0);
 }
 
-TEST(TextEditor, EndToEndTestSecond) {
+TEST(TextEditor, EndToEndTestSecond)
+{
     TextEditor tmp;
     std::string sf, ss;
     tmp.teach("LoR.txt");
@@ -153,7 +163,8 @@ TEST(TextEditor, EndToEndTestSecond) {
     ASSERT_TRUE(remove("../../fixed_texts/test_texts/2.txt") == 0);
 }
 
-TEST(TextEditor, EndToEndTestThird) {
+TEST(TextEditor, EndToEndTestThird)
+{
     TextEditor tmp;
     std::string sf, ss;
     tmp.teach("LoR.txt");
