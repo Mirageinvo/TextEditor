@@ -194,7 +194,9 @@ void TextEditor::fix_mist(const std::string &path)
                     tmp += line[i];
                 }
             }
-            out << std::endl;
+            if (!in.eof()) {
+                out << std::endl;
+            }
         }
     }
     in.close();
