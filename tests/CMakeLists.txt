@@ -26,3 +26,9 @@ add_dependencies(run_tests tests)
 
 target_compile_options(tests PUBLIC -fsanitize=address -g)
 set_target_properties(tests PROPERTIES LINK_FLAGS "-fsanitize=address")
+
+add_custom_target(
+    run_all
+    COMMENT "Running tests and main for Text_Editor"
+)
+add_dependencies(run_all run_tests run_main)
