@@ -49,7 +49,7 @@ TEST(Dictionary, AddWordsTest)
 {
     Dictionary tmp;
     size_t dist, freq;
-    std::string s, ret, path = "../../texts_for_teaching/test_text/0.txt";
+    std::string s, ret, path = "../../Text_Editor/texts_for_teaching/test_text/0.txt";
     std::vector<std::string> arr;
     tmp.add_words(path);
     std::ifstream in;
@@ -71,35 +71,6 @@ TEST(Dictionary, AddWordsTest)
         ASSERT_TRUE(tmp.in_table(s));
         tmp.get_best_word(ret, dist, freq, s);
         ASSERT_TRUE(s == ret);
-    }
-}
-
-TEST(TextEditor, FindBestWordTest)
-{
-    TextEditor tmp;
-    std::string s, path = "test_text/0.txt";
-    std::vector<std::string> arr;
-    tmp.teach(path);
-    std::ifstream in;
-    in.open("../../texts_for_teaching/" + path);
-    ASSERT_TRUE(in.is_open());
-    if (in.is_open())
-    {
-        while (!in.eof())
-        {
-            in >> s;
-            arr.push_back(s);
-        }
-        in.close();
-    }
-    for (const auto &word : arr)
-    {
-        s = "";
-        for (size_t j = 0; j < word.size() - 2; ++j)
-        {
-            s += word[j];
-        }
-        ASSERT_TRUE(word == tmp.find_best_word(s));
     }
 }
 
