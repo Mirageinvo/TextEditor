@@ -20,7 +20,7 @@ TextEditor::~TextEditor()
 
 void TextEditor::teach(const std::string &path)
 {
-    std::string tmp = "../../texts_for_teaching/" + path;
+    std::string tmp = "../../Text_Editor/texts_for_teaching/" + path;
     auto arr = new std::thread[9];
     for (size_t i = 0; i < 9; ++i)
     {
