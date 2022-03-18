@@ -131,6 +131,10 @@ void TextEditor::fix_mist(const std::string &path)
     std::ifstream in;
     std::ofstream out;
     in.open("../../texts_for_fixing/" + path);
+    if (!in.is_open())
+    {
+        throw -1;
+    }
     out.open("../../fixed_texts/" + path);
     assert(in.is_open());
     assert(out.is_open());
