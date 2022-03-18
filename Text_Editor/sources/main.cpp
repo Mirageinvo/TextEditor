@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "text_editor.hpp"
 
 int main()
