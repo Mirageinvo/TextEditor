@@ -2,31 +2,34 @@ Checks: >
   -*,
   bugprone-*,
   google-*,
+  llvm-*,
+  -llvm-header-guard,
   misc-*,
   modernize-*,
   performance-*,
   portability-*,
-  -google-build-using-namespace,
-  -google-readability-braces-around-statements,
-  -google-readability-namespace-comments,
+  readability-*,
   -google-runtime-references,
-  -misc-non-private-member-variables-in-classes,
   -modernize-return-braced-init-list,
   -modernize-use-trailing-return-type,
   -modernize-avoid-c-arrays,
-  -performance-move-const-arg,
   -readability-braces-around-statements,
-  -readability-magic-numbers,
   -readability-named-parameter,
   -readability-redundant-declaration,
   -readability-function-cognitive-complexity,
-  -bugprone-narrowing-conversions
+  -bugprone-narrowing-conversions,
+  -readability-else-after-return,
+  -misc-non-private-member-variables-in-classes,
+  -llvm-include-order,
+  -llvm-qualified-auto,
+  -readability-qualified-auto,
+  -bugprone-use-after-move
 WarningsAsErrors: "*"
 
 CheckOptions:
   - { key: readability-identifier-naming.NamespaceCase,          value: lower_case }
   - { key: readability-identifier-naming.ClassCase,              value: CamelCase  }
-  - { key: readability-identifier-naming.StructCase,             value: CamelCase  }
+  - { key: readability-identifier-naming.StructCase,             value: aNy_CasE  }
   - { key: readability-identifier-naming.TemplateParameterCase,  value: CamelCase  }
   - { key: readability-identifier-naming.FunctionCase,           value: aNy_CasE   }
   - { key: readability-identifier-naming.VariableCase,           value: lower_case }
@@ -34,8 +37,6 @@ CheckOptions:
   - { key: readability-identifier-naming.ClassMemberSuffix,      value: _          }
   - { key: readability-identifier-naming.PrivateMemberSuffix,    value: _          }
   - { key: readability-identifier-naming.ProtectedMemberSuffix,  value: _          }
-  - { key: readability-identifier-naming.EnumConstantCase,         value: CamelCase }
-  - { key: readability-identifier-naming.EnumConstantPrefix,       value: k         }
   - { key: readability-identifier-naming.ConstexprVariableCase,    value: CamelCase }
   - { key: readability-identifier-naming.ConstexprVariablePrefix,  value: k         }
   - { key: readability-identifier-naming.GlobalConstantCase,       value: CamelCase }
