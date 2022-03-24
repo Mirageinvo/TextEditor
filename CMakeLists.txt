@@ -22,7 +22,7 @@ add_custom_target(
 set(CMAKE_CXX_CLANG_TIDY
     clang-tidy;
     --format-style=file;
-    --header-filter=*.hpp;
+    --header-filter=.*;
 )
 
 add_subdirectory("Text_Editor")
