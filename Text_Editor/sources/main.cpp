@@ -1,8 +1,8 @@
-#include "text_editor.hpp"
 #include <iostream>
 
-int main()
-{
+#include "text_editor.hpp"
+
+int main() {
     std::string filename;
     TextEditor el;
     el.teach("LoR.txt");
@@ -13,12 +13,9 @@ int main()
 
     std::cout << "Insert name of the file: ";
     std::cin >> filename;
-    try
-    {
+    try {
         el.fix_mist(filename);
-    }
-    catch (int i)
-    {
+    } catch (int i) {
         std::cout << "Unknown filename" << std::endl;
     }
     return 0;
