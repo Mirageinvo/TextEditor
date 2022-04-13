@@ -9,7 +9,7 @@ class Dictionary : public HashTable<std::string> {
     void add_words(const std::string &path);
     void set_word_size(const uint32_t word_size);
     void get_best_word(std::string &ret, uint32_t &dist, uint32_t &freq, const std::string &word);
-    static uint32_t dist_lev(const std::string& word1, const std::string& word2);
+    static uint32_t dist_lev(const std::string &word1, const std::string &word2);
 
    private:
     uint32_t word_size_;
