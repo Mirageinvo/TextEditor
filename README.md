@@ -17,6 +17,7 @@ To run the main program:
 
 ```
 make run_main
+After that you need to insert the name of your file in text_for_fixing section
 ```
 
 To run tests:
