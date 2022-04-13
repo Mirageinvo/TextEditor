@@ -15,8 +15,8 @@ int main() {
     std::cin >> filename;
     try {
         el.fix_mist(filename);
-    } catch (int i) {
-        std::cout << "Unknown filename" << std::endl;
+    } catch (const std::runtime_error& e) {
+        std::cerr << e.what() << std::endl;
     }
     return 0;
 }

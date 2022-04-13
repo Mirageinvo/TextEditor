@@ -96,7 +96,7 @@ void TextEditor::fix_mist(const std::string &path) {
     std::ofstream out;
     in.open("../../texts_for_fixing/" + path);
     if (!in.is_open()) {
-        throw -1;
+        throw std::runtime_error("Unknown file");
     }
     out.open("../../fixed_texts/" + path);
     assert(in.is_open());
