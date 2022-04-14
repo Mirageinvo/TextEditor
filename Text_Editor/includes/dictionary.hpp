@@ -13,7 +13,7 @@ class Dictionary : public HashTable<std::string> {
 
    private:
     uint32_t word_size_;
-    std::string make_word_(const std::string &tmp);
+    static std::string make_word_(const std::string &tmp);
 };
 
 #endif  // TEXT_EDITOR_DICTIONARY

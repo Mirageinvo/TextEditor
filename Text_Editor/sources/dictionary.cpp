@@ -7,8 +7,9 @@ Dictionary::Dictionary(uint32_t word_size) : word_size_(word_size) {}
 
 std::string Dictionary::make_word_(const std::string &tmp) {
     bool only_signs = true;
-    std::string word = "";
-    uint32_t it1 = 0, it2 = 0;
+    std::string word;
+    uint32_t it1 = 0;
+    uint32_t it2 = 0;
     for (uint32_t i = 0; i < tmp.size(); ++i) {
         if ((static_cast<uint32_t>(tmp[i]) >= static_cast<uint32_t>('a') &&
              static_cast<uint32_t>(tmp[i]) <= static_cast<uint32_t>('z')) ||
@@ -34,7 +35,7 @@ std::string Dictionary::make_word_(const std::string &tmp) {
     for (uint32_t i = it1; i <= it2; ++i) {
         word += tmp[i];
     }
-    return word.size() > 1u ? word : "";
+    return word.size() > 1U ? word : "";
 }
 
 void Dictionary::set_word_size(const uint32_t word_size) { word_size_ = word_size; }
@@ -60,7 +61,10 @@ uint32_t Dictionary::dist_lev(const std::string &word1, const std::string &word2
 }
 
 void Dictionary::add_words(const std::string &path) {
-    std::string tmp, word;
+    const size_t min_word_size = 1;
+    const size_t max_word_size = 10;
+    std::string tmp;
+    std::string word;
     std::ifstream in;
     in.open(path);
     assert(in.is_open());
@@ -68,8 +72,8 @@ void Dictionary::add_words(const std::string &path) {
         while (!in.eof()) {
             in >> tmp;
             word = make_word_(tmp);
-            if ((word.size() > 1 && word.size() < 10 && word.size() == word_size_) ||
-                (word.size() >= 10 && word_size_ == 0)) {
+            if ((word.size() > min_word_size && word.size() < max_word_size && word.size() == word_size_) ||
+                (word.size() >= max_word_size && word_size_ == 0)) {
                 add(word);
             }
         }
