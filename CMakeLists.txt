@@ -19,11 +19,13 @@ add_custom_target(
     COMMAND clang-format -i ${DICT_FILES}
 )
 
-set(CMAKE_CXX_CLANG_TIDY
-    clang-tidy;
-    --format-style=file;
-    --header-filter=*.hpp;
-)
+if (CLANG_TIDY)
+    set(CMAKE_CXX_CLANG_TIDY
+       clang-tidy;
+       --format-style=file;
+       --header-filter=*.hpp;
+    )
+endif()
 
 add_subdirectory("Text_Editor")
 add_subdirectory("tests")
