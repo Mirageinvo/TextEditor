@@ -8,7 +8,7 @@ template <typename T>
 class HashTable {
    public:
     explicit HashTable(uint32_t capacity = initialSize_);
-    ~HashTable();
+    virtual ~HashTable();
     void add(const T& word, uint32_t number_of = numOf_);
     bool in_table(const T& word) const;
 
