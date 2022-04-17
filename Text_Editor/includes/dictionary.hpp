@@ -3,7 +3,7 @@
 
 #include "hash_table.hpp"
 
-class Dictionary : public HashTable<std::string> {
+class Dictionary final : public HashTable<std::string> {
    public:
     explicit Dictionary(uint32_t word_size = 0);
     void add_words(const std::string &path);
