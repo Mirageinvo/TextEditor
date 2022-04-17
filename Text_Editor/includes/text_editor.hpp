@@ -3,7 +3,7 @@
 
 #include "dictionary.hpp"
 
-class TextEditor {
+class TextEditor final {
    public:
     TextEditor();
     ~TextEditor();
