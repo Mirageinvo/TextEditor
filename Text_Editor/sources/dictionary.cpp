@@ -72,7 +72,8 @@ void Dictionary::add_words(const std::string &path) {
         while (!in.eof()) {
             in >> tmp;
             word = make_word_(tmp);
-            if ((word.size() > min_word_size && word.size() < max_word_size && word.size() == word_size_) ||
+            if ((word.size() > min_word_size && word.size() < max_word_size &&
+                 word.size() == word_size_) ||
                 (word.size() >= max_word_size && word_size_ == 0)) {
                 add(word);
             }
